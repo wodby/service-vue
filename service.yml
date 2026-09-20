@@ -2,7 +2,7 @@ name: vue
 type: service
 from: nginx
 fromVersionConstraint: "^2.0.0"
-fromVersion: "2.0.0"
+fromVersion: "2.0.1"
 title: Nginx (Vue)
 labels:
 - nginx
