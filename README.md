@@ -6,7 +6,7 @@ This service inherits the Nginx runtime and specializes its application build co
 
 ## Manifest design
 
-- Base service: `nginx` `1.0.12`, compatible with `^1.0.0`
+- Base service: `nginx` `2.0.0`, compatible with `^2.0.0`
 - Runtime, endpoint, scaling, and Helm configuration: inherited from Nginx
 - Build source connection: enabled
 - Starter: Vue boilerplate
