@@ -15,3 +15,56 @@ build:
     title: Vue boilerplate
     repo: https://github.com/wodby/vue-boilerplate
     branch: main
+
+env:
+- name: WORKSPACE_NODE_COMMAND
+  value: workspace-node vite-start
+- name: PORT
+  value: '8080'
+- name: NODE_PORT
+  value: '8080'
+
+workspace:
+  runtimeImage: wodby/node:24-dev-r3
+  runner:
+    workload: main
+    container: nginx
+    workingDirectory: /usr/src/app
+    homeDirectory: /home/node
+    username: node
+    uid: 1000
+    gid: 1000
+    port: 2222
+    command: [sudo, /usr/sbin/sshd, -D, -e, -f, /dev/null]
+  mounts:
+  - name: code
+    workload: main
+    container: nginx
+    path: /usr/src/app
+  preparation:
+  - name: dependencies
+    command: [workspace-node, prepare]
+    timeoutSeconds: 1800
+  reload: watch
+  helmValues:
+  - name: containerSecurityContext.enabled
+    value: true
+  - name: podSecurityContext.enabled
+    value: true
+  - name: containerSecurityContext.runAsUser
+    value: 1000
+  - name: containerSecurityContext.runAsGroup
+    value: 1000
+  - name: podSecurityContext.fsGroup
+    value: 1000
+  - name: containerSecurityContext.readOnlyRootFilesystem
+    value: false
+  - name: customReadinessProbe
+    value:
+      tcpSocket:
+        port: 8080
+  - name: customLivenessProbe
+    value:
+      tcpSocket:
+        port: 8080
+      initialDelaySeconds: 30
