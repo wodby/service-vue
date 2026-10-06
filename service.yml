@@ -26,7 +26,7 @@ env:
   value: '8080'
 
 workspace:
-  runtimeImage: wodby/node:24-dev-r4
+  runtimeImage: wodby/node:24-dev-r5
   runner:
     workload: main
     container: nginx
